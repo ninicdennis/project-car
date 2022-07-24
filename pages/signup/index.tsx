@@ -1,8 +1,9 @@
 import { Card, Center, PasswordInput, Title, TextInput, Button, Grid, Group, Loader } from '@mantine/core';
 import Link from 'next/link';
 import { useForm } from '@mantine/form';
-import { useGetUserSession, useRegisterUser } from '../../queryHooks/Authentication';
 import Router from 'next/router';
+import { useUserState } from '../../queryHooks/Authentication';
+import { showNotification } from '@mantine/notifications';
 
 const RegisterPage = () => {
 	const form = useForm({
@@ -18,25 +19,28 @@ const RegisterPage = () => {
 			password: (value) => (value.length > 6 ? null : 'Invalid password'),
 		},
 	});
-	const registerUserHook = useRegisterUser();
-	const { isLoading, data: userSession } = useGetUserSession();
+	const [{ session: userSession }, actions] = useUserState();
 
-	const registerUser = () => {
-		registerUserHook.mutate(form.values);
-	};
-
-	if (isLoading) {
-		return <Loader />;
-	}
 	if (userSession) {
 		Router.push('/home');
 	}
+
+	const register = () => {
+		actions.register(form.values).then(() =>
+			showNotification({
+				title: 'Logged in!',
+				message: 'Welcome!',
+				autoClose: 3000,
+				color: 'green',
+			})
+		);
+	};
 
 	return (
 		<Center>
 			<Card shadow='sm' p='lg'>
 				<Title>Register</Title>
-				<form onSubmit={form.onSubmit(registerUser)}>
+				<form onSubmit={form.onSubmit(register)}>
 					<Grid justify='center' align='center'>
 						<Grid.Col>
 							<TextInput label='Username' required {...form.getInputProps('username')} />

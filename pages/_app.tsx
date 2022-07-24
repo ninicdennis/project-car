@@ -2,12 +2,10 @@ import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { MantineProvider } from '@mantine/core';
 import { AppShellWrapper } from '../components/AppShell';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { NotificationsProvider } from '@mantine/notifications';
 
 export default function App(props: AppProps) {
 	const { Component, pageProps } = props;
-	const queryClient = new QueryClient();
 
 	return (
 		<>
@@ -24,14 +22,11 @@ export default function App(props: AppProps) {
 					colorScheme: 'dark',
 				}}
 			>
-				<QueryClientProvider client={queryClient}>
+				<NotificationsProvider>
 					<AppShellWrapper>
-						<QueryClientProvider client={queryClient}>
-							<Component {...pageProps} />
-							<ReactQueryDevtools initialIsOpen={false} />
-						</QueryClientProvider>
+						<Component {...pageProps} />
 					</AppShellWrapper>
-				</QueryClientProvider>
+				</NotificationsProvider>
 			</MantineProvider>
 		</>
 	);

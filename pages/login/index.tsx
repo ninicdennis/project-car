@@ -1,8 +1,9 @@
 import { Card, Center, PasswordInput, Title, TextInput, Button, Grid, Group, Loader } from '@mantine/core';
 import Link from 'next/link';
 import { useForm } from '@mantine/form';
-import { useLoginUser, useGetUserSession } from '../../queryHooks/Authentication';
+import { useUserState } from '../../queryHooks/Authentication';
 import Router from 'next/router';
+import { showNotification } from '@mantine/notifications';
 
 const LoginPage = () => {
 	const form = useForm({
@@ -16,16 +17,19 @@ const LoginPage = () => {
 			password: (value) => (value.length > 6 ? null : 'Password too short'),
 		},
 	});
-	const loginUserHook = useLoginUser();
-	const { isLoading, data: userSession } = useGetUserSession();
+	const [{ session: userSession }, actions] = useUserState();
 
 	const loginUser = () => {
-		loginUserHook.mutate(form.values);
+		actions.login(form.values).then(() =>
+			showNotification({
+				title: 'Logged in!',
+				message: 'Welcome back!',
+				autoClose: 3000,
+				color: 'green',
+			})
+		);
 	};
 
-	if (isLoading) {
-		return <Loader />;
-	}
 	if (userSession) {
 		Router.push('/home');
 	}

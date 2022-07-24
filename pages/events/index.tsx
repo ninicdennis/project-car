@@ -3,18 +3,17 @@ import Router from 'next/router';
 import { useEffect } from 'react';
 import { useUserState } from '../../queryHooks/Authentication';
 
-const Homepage = () => {
+const EventsPage = () => {
 	const [{ user, session: userSession }] = useUserState();
-
 	useEffect(() => {
 		if (!userSession) Router.push('/');
 	}, [userSession]);
 
 	return (
 		<div>
-			<Text>Homepage</Text>
+			<Text>Events</Text>
 		</div>
 	);
 };
 
-export default Homepage;
+export default EventsPage;

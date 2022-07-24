@@ -7,5 +7,6 @@ export interface HeaderProps {
 export interface NavBarRoute {
 	href: string;
 	title: string;
-	userLoggedIn: boolean;
+	userAuthenticated: boolean;
+	children?: NavBarRoute[];
 }

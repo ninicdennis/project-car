@@ -1,46 +1,77 @@
-import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query';
-import { createUser, getUser, userLogIn, signOut } from '../pages/api/authentication';
-import { AuthRegister, AuthLogin } from './types';
+import { AuthRegister, AuthLogin, InitialState } from './types';
+import supabase from '../supabase/init';
+import { fetcher } from './fetcher';
+import { showNotification } from '@mantine/notifications';
+import { createStore, createHook } from 'react-sweet-state';
 
-export const useRegisterUser = () => {
-	return useMutation(async (values: AuthRegister) => await createUser(values), {
-		onError: (err) => console.log(err),
-		onSuccess: (data) => {
-			console.log(data);
-		},
-	});
+const initialState: InitialState = {
+	user: { id: '', username: '', email: '', image_url: '' },
+	session: null,
+};
+const Store = createStore({
+	initialState,
+	actions: {
+		getUserSession:
+			() =>
+			async ({ setState }) => {
+				setState({ session: await getUser() });
+			},
+		login:
+			(data) =>
+			async ({ setState }) => {
+				await loginUser(data).then(async (values) => {
+					if (values) {
+						const userData = await fetcher({ url: 'api/auth/getUser', method: 'POST', body: { id: values.id } });
+						setState({ user: userData, session: await getUser() });
+					}
+				});
+			},
+		register:
+			(data) =>
+			async ({ setState }) => {
+				await createUser(data).then(async (values) => {
+					if (values) {
+						const userData = await fetcher({
+							url: 'api/auth/createUser',
+							method: 'POST',
+							body: { username: data.username, id: values.id, email: data.email },
+						});
+						setState({ user: userData, session: await getUser() });
+					}
+				});
+			},
+		signOut:
+			() =>
+			async ({ setState, getState }) => {
+				await signOut();
+				setState(initialState);
+			},
+	},
+	name: 'userStore',
+});
+
+const getUser = async () => {
+	return supabase.auth.session();
 };
 
-export const useLoginUser = () => {
-	const queryClient = useQueryClient();
-
-	return useMutation(async (values: AuthLogin) => await userLogIn(values), {
-		onError: (err) => console.log(err),
-		onSuccess: (value) => {
-			queryClient.invalidateQueries(['getUserSession']);
-			queryClient.setQueryData(['getUserSession'], value);
-		},
-	});
+const signOut = async () => {
+	return supabase.auth.signOut();
 };
 
-export const useGetUserSession = () => {
-	const queryClient = useQueryClient();
-
-	return useQuery(['getUserSession'], getUser, {
-		onSuccess: (value) => {
-			queryClient.invalidateQueries(['getUserSession']);
-			queryClient.setQueryData(['getUserSession'], value);
-		},
-	});
+const createUser = async ({ email, password, username }: AuthRegister) => {
+	const { user, error } = await supabase.auth.signUp({ email, password });
+	if (error) throw error;
+	if (user) {
+		const { id } = user;
+		return { id, email, username };
+	}
+	return null;
 };
 
-export const useSignOut = () => {
-	const queryClient = useQueryClient();
-	return useMutation(async () => await signOut(), {
-		onError: (err) => console.log(err),
-		onSuccess: () => {
-			queryClient.invalidateQueries(['getUserSession']);
-			queryClient.setQueryData(['getUserSession'], {});
-		},
-	});
+const loginUser = async ({ email, password }: AuthLogin) => {
+	const { user, error } = await supabase.auth.signIn({ email, password });
+	if (error) throw error;
+	return user;
 };
+
+export const useUserState = createHook(Store);

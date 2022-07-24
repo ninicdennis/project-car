@@ -1,17 +1,13 @@
 import { Header, MediaQuery, Burger, useMantineTheme, Title, Text } from '@mantine/core';
 import { HeaderProps } from './types';
-import { useGetUserSession } from '../../queryHooks/Authentication';
+import { useUserState } from '../../queryHooks/Authentication';
 import Router from 'next/router';
-import { useEffect } from 'react';
 import { useStyles } from './styles';
 
 const HeaderComponent = ({ opened, setOpened }: HeaderProps) => {
 	const { classes } = useStyles();
 	const theme = useMantineTheme();
-	const { data: userSession, refetch } = useGetUserSession();
-	useEffect(() => {
-		refetch();
-	});
+	const [{ user, session: userSession }] = useUserState();
 
 	return (
 		<Header height={70} p='md'>
@@ -29,7 +25,7 @@ const HeaderComponent = ({ opened, setOpened }: HeaderProps) => {
 					<Title onClick={() => Router.push('/')} order={2} className={classes.cursorPointer}>
 						Project: Car
 					</Title>
-					{userSession && <Text>Hello user</Text>}
+					{userSession && <Text>Hello {user.username}</Text>}
 				</div>
 			</div>
 		</Header>
