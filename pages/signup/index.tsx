@@ -2,7 +2,7 @@ import { Card, Center, PasswordInput, Title, TextInput, Button, Grid, Group, Loa
 import Link from 'next/link';
 import { useForm } from '@mantine/form';
 import Router from 'next/router';
-import { useUserState } from '../../queryHooks/Authentication';
+import { useUserState } from '../../stores/Authentication';
 import { showNotification } from '@mantine/notifications';
 
 const RegisterPage = () => {

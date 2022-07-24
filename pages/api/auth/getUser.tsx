@@ -1,6 +1,5 @@
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
-import supabase from '../../../supabase/init';
 
 const prisma = new PrismaClient();
 

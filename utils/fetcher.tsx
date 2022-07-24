@@ -1,5 +1,8 @@
-import { FETCH } from './types';
-
+export interface FETCH {
+	url: string;
+	method: 'POST' | 'GET' | 'DELETE' | 'PUT' | 'PATCH';
+	body?: Object;
+}
 export const fetcher = async ({ url, method, body }: FETCH) => {
 	return await fetch(url, {
 		method,

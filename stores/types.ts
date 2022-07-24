@@ -11,12 +11,6 @@ export interface AuthLogin {
 	password: string;
 }
 
-export interface FETCH {
-	url: string;
-	method: 'POST' | 'GET' | 'DELETE' | 'PUT' | 'PATCH';
-	body?: Object;
-}
-
 export interface InitialState {
 	user: {
 		id: string;

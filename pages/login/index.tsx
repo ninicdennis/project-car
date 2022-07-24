@@ -1,7 +1,7 @@
 import { Card, Center, PasswordInput, Title, TextInput, Button, Grid, Group, Loader } from '@mantine/core';
 import Link from 'next/link';
 import { useForm } from '@mantine/form';
-import { useUserState } from '../../queryHooks/Authentication';
+import { useUserState } from '../../stores/Authentication';
 import Router from 'next/router';
 import { showNotification } from '@mantine/notifications';
 

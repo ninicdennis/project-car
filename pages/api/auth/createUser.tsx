@@ -1,5 +1,4 @@
-import supabase from '../../../supabase/init';
-import { AuthRegister } from '../../../queryHooks/types';
+import { AuthRegister } from '../../../stores/types';
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 

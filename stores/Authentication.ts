@@ -1,7 +1,6 @@
 import { AuthRegister, AuthLogin, InitialState } from './types';
-import supabase from '../supabase/init';
-import { fetcher } from './fetcher';
-import { showNotification } from '@mantine/notifications';
+import supabase from '../utils/supabase/init';
+import { fetcher } from '../utils/fetcher';
 import { createStore, createHook } from 'react-sweet-state';
 
 const initialState: InitialState = {

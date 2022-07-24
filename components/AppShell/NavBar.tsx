@@ -1,7 +1,7 @@
 import { Navbar, Button, Grid, Text } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import Link from 'next/link';
-import { useUserState } from '../../queryHooks/Authentication';
+import { useUserState } from '../../stores/Authentication';
 import { MainRoutes } from './constants';
 
 const NavBarComponenet = ({ opened }: { opened: boolean }) => {
