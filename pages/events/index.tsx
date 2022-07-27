@@ -1,13 +1,12 @@
 import { Text } from '@mantine/core';
 import Router from 'next/router';
 import { useEffect } from 'react';
-import { useUserState } from '../../stores/Authentication';
+import { InitialState } from '../../stores/types';
 
-const EventsPage = () => {
-	const [{ user, session: userSession }] = useUserState();
+const EventsPage = ({ user, session }: InitialState) => {
 	useEffect(() => {
-		if (!userSession) Router.push('/');
-	}, [userSession]);
+		if (!session) Router.push('/');
+	}, [session]);
 
 	return (
 		<div>

@@ -3,9 +3,16 @@ import Head from 'next/head';
 import { MantineProvider } from '@mantine/core';
 import { AppShellWrapper } from '../components/AppShell';
 import { NotificationsProvider } from '@mantine/notifications';
+import { useUserState } from '../stores/Authentication';
+import { useEffect } from 'react';
 
 export default function App(props: AppProps) {
 	const { Component, pageProps } = props;
+	const [{ user, session }, actions] = useUserState();
+
+	useEffect(() => {
+		actions.getUserSession();
+	}, []);
 
 	return (
 		<>
@@ -24,7 +31,7 @@ export default function App(props: AppProps) {
 			>
 				<NotificationsProvider>
 					<AppShellWrapper>
-						<Component {...pageProps} />
+						<Component {...pageProps} user={user} session={session} />
 					</AppShellWrapper>
 				</NotificationsProvider>
 			</MantineProvider>

@@ -4,8 +4,14 @@ import { useForm } from '@mantine/form';
 import Router from 'next/router';
 import { useUserState } from '../../stores/Authentication';
 import { showNotification } from '@mantine/notifications';
+import { InitialState } from '../../stores/types';
 
-const RegisterPage = () => {
+const RegisterPage = ({ user, session }: InitialState) => {
+	const [, actions] = useUserState();
+	if (session) {
+		Router.push('/home');
+	}
+
 	const form = useForm({
 		initialValues: {
 			email: '',
@@ -19,21 +25,26 @@ const RegisterPage = () => {
 			password: (value) => (value.length > 6 ? null : 'Invalid password'),
 		},
 	});
-	const [{ session: userSession }, actions] = useUserState();
-
-	if (userSession) {
-		Router.push('/home');
-	}
 
 	const register = () => {
-		actions.register(form.values).then(() =>
-			showNotification({
-				title: 'Logged in!',
-				message: 'Welcome!',
-				autoClose: 3000,
-				color: 'green',
-			})
-		);
+		actions
+			.register(form.values)
+			.then(() =>
+				showNotification({
+					title: 'Logged in!',
+					message: 'Welcome!',
+					autoClose: 3000,
+					color: 'green',
+				})
+			)
+			.catch((err) => {
+				showNotification({
+					title: 'Error!',
+					message: err.message,
+					autoClose: 3000,
+					color: 'red',
+				});
+			});
 	};
 
 	return (

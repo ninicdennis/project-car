@@ -13,7 +13,7 @@ export const MainRoutes: NavBarRoute[] = [
 		children: [
 			{
 				href: '/profile/settings',
-				title: 'Profile Settings',
+				title: 'Settings',
 				userAuthenticated: true,
 			},
 		],

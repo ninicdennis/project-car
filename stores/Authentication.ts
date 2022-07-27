@@ -13,15 +13,23 @@ const Store = createStore({
 		getUserSession:
 			() =>
 			async ({ setState }) => {
-				setState({ session: await getUser() });
+				const session = await getUser();
+				if (!session) return;
+				const user = await fetcher({
+					url: 'api/auth/getUser',
+					method: 'POST',
+					body: { id: session?.user?.id },
+				});
+				setState({ user, session });
 			},
 		login:
 			(data) =>
 			async ({ setState }) => {
 				await loginUser(data).then(async (values) => {
 					if (values) {
-						const userData = await fetcher({ url: 'api/auth/getUser', method: 'POST', body: { id: values.id } });
-						setState({ user: userData, session: await getUser() });
+						const session = await getUser();
+						const user = await fetcher({ url: 'api/auth/getUser', method: 'POST', body: { id: values.id } });
+						setState({ user, session });
 					}
 				});
 			},
@@ -30,18 +38,20 @@ const Store = createStore({
 			async ({ setState }) => {
 				await createUser(data).then(async (values) => {
 					if (values) {
-						const userData = await fetcher({
+						const session = await getUser();
+
+						const user = await fetcher({
 							url: 'api/auth/createUser',
 							method: 'POST',
 							body: { username: data.username, id: values.id, email: data.email },
 						});
-						setState({ user: userData, session: await getUser() });
+						setState({ user, session });
 					}
 				});
 			},
 		signOut:
 			() =>
-			async ({ setState, getState }) => {
+			async ({ setState }) => {
 				await signOut();
 				setState(initialState);
 			},
