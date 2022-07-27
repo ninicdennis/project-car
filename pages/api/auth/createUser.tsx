@@ -6,9 +6,8 @@ const prisma = new PrismaClient();
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { username, email, id }: AuthRegister = req.body;
-	console.log(req.body);
 	if (id) {
-		const response = await prisma.user.create({
+		const response = await prisma.user_data.create({
 			data: {
 				id,
 				username,
