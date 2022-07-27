@@ -5,7 +5,10 @@
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
-		"start": "next start"
+		"start": "next start",
+		"prisma:migrate": "yarn prisma migrate dev",
+		"prisma:migrate:deploy": "yarn prisma migrate deploy",
+		"prisma:gen": "yarn prisma generate"
 	},
 	"dependencies": {
 		"@mantine/core": "^4.2.12",
