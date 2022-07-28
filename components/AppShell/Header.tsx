@@ -1,4 +1,4 @@
-import { Header, MediaQuery, Burger, useMantineTheme, Title, Text } from '@mantine/core';
+import { Header, MediaQuery, Burger, useMantineTheme, Title, Text, Avatar } from '@mantine/core';
 import { HeaderProps } from './types';
 import { useUserState } from '../../stores/Authentication';
 import Router from 'next/router';
@@ -25,7 +25,7 @@ const HeaderComponent = ({ opened, setOpened }: HeaderProps) => {
 					<Title onClick={() => Router.push('/')} order={2} className={classes.cursorPointer}>
 						Project: Car
 					</Title>
-					{userSession && <Text>Hello {user.username}</Text>}
+					{userSession && <Avatar radius='sm' src={null} />}
 				</div>
 			</div>
 		</Header>

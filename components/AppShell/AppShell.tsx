@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppShell, useMantineTheme } from '@mantine/core';
+import { AppShell, useMantineTheme, ScrollArea } from '@mantine/core';
 import HeaderComponent from './Header';
 import FooterComponent from './Footer';
 import NavBarComponenet from './NavBar';
@@ -20,7 +20,9 @@ export const AppShellWrapper = ({ children }: { children: JSX.Element }) => {
 			footer={<FooterComponent />}
 			header={<HeaderComponent opened={opened} setOpened={setOpened} />}
 		>
-			{children}
+			<ScrollArea.Autosize maxHeight={'82vh'} mx='auto'>
+				{children}
+			</ScrollArea.Autosize>
 		</AppShell>
 	);
 };

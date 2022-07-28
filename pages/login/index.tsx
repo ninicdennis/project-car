@@ -55,7 +55,7 @@ const LoginPage = ({ user, session }: InitialState) => {
 		<Center>
 			<Card shadow='sm' p='lg'>
 				<Title sx={{ marginBottom: 8 }}>Login</Title>
-				<div style={{ width: 400, position: 'relative' }}>
+				<div style={{ maxWidth: 400, position: 'relative' }}>
 					<LoadingOverlay visible={visible} overlayBlur={2} />
 					<form onSubmit={form.onSubmit(loginUser)}>
 						<Grid justify='center' align='center'>
@@ -71,14 +71,9 @@ const LoginPage = ({ user, session }: InitialState) => {
 								/>
 							</Grid.Col>
 							<Grid.Col>
-								<Group>
+								<Group position='center'>
 									<Button type='submit'>Login</Button>
 									<Button variant='outline'>Forgot Password</Button>
-									<Link href='/signup' passHref>
-										<Button component='a' variant='outline'>
-											Register
-										</Button>
-									</Link>
 								</Group>
 							</Grid.Col>
 						</Grid>

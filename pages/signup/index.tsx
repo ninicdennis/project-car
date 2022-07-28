@@ -71,7 +71,7 @@ const RegisterPage = ({ user, session }: InitialState) => {
 		<Center>
 			<Card shadow='sm' p='lg'>
 				<Title sx={{ marginBottom: 8 }}>Register</Title>
-				<div style={{ width: 400, position: 'relative' }}>
+				<div style={{ maxWidth: 400, position: 'relative' }}>
 					<LoadingOverlay visible={visible} overlayBlur={2} />
 					<form onSubmit={form.onSubmit(register)}>
 						<Grid justify='center' align='center'>
@@ -98,7 +98,7 @@ const RegisterPage = ({ user, session }: InitialState) => {
 								/>
 							</Grid.Col>
 							<Grid.Col>
-								<Group>
+								<Group position='center'>
 									<Button type='submit'>Register</Button>
 									<Link href='/login' passHref>
 										<Button component='a' variant='outline'>
