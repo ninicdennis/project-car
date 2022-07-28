@@ -14,19 +14,7 @@ DATABASE_URL=
 
 ## RLS Policies
 
-For now, I will manually have to keep track of the RLS policies for each table, as there seems to be no way currently to migrate them.
-
-### User
-
-```sql
-ALTER TABLE user_data ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "Update user based on id" ON "public"."user_data"
-AS PERMISSIVE FOR UPDATE
-TO public
-USING (auth.uid() = id)
-WITH CHECK (auth.uid() = id)
-```
+For now, RLS Policies will manually have to be entered. I have placed them inside of `./db`.
 
 Run the development server:
 
