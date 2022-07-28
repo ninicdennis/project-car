@@ -1,11 +1,13 @@
-import { Navbar, Button, Grid, Text } from '@mantine/core';
+import { Navbar, Button, NavLink } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import Link from 'next/link';
 import { useUserState } from '../../stores/Authentication';
 import { MainRoutes } from './constants';
+import { useStyles } from './styles';
 
 const NavBarComponenet = ({ opened }: { opened: boolean }) => {
 	const [{ session: userSession }, actions] = useUserState();
+	const { classes } = useStyles();
 
 	const signOut = async () => {
 		actions.signOut().then(() =>
@@ -20,33 +22,27 @@ const NavBarComponenet = ({ opened }: { opened: boolean }) => {
 
 	return (
 		<Navbar p='md' hiddenBreakpoint='sm' hidden={!opened} width={{ sm: 100, lg: 200 }}>
-			<Grid justify='center'>
-				{MainRoutes.map(({ href, title, userAuthenticated, children }) => {
-					if (userAuthenticated && !userSession) return null;
-					if (!userAuthenticated && userSession) return null;
-
+			{MainRoutes.map(({ key, href, userAuth, title, children, icon: navIcon }) => {
+				if (userAuth && !userSession) return null;
+				if (!userAuth && userSession) return null;
+				if (children) {
 					return (
-						<Grid.Col key={href}>
-							<Link href={href} passHref>
-								<Button variant='subtle' component='a' fullWidth>
-									<Text>{title}</Text>
-								</Button>
-							</Link>
-							{children &&
-								children.map(({ href: hrefChild, title: titleChild }) => (
-									<Link key={hrefChild} href={hrefChild} passHref>
-										<Button variant='subtle' component='a' fullWidth>
-											<Text>{titleChild}</Text>
-										</Button>
-									</Link>
-								))}
-						</Grid.Col>
+						<NavLink key={key} label={title} icon={navIcon}>
+							{children?.map(({ href: hrefChild, title: titleChild, icon }) => (
+								<Link key={hrefChild} href={hrefChild} passHref>
+									<NavLink icon={icon} label={titleChild} component='a' />
+								</Link>
+							))}
+						</NavLink>
 					);
-				})}
-			</Grid>
-			<div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'center', height: '100%' }}>
-				{userSession && <Button onClick={signOut}>Sign Out</Button>}
-			</div>
+				}
+				return (
+					<Link key={key} href={href} passHref>
+						<NavLink icon={navIcon} label={title} component='a' />
+					</Link>
+				);
+			})}
+			<div className={classes.flexEnd}>{userSession && <Button onClick={signOut}>Sign Out</Button>}</div>
 		</Navbar>
 	);
 };

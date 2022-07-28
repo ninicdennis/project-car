@@ -1,36 +1,59 @@
-import { NavBarRoute } from './types';
+import { IconCalendarEvent, IconHome2, IconLogin, IconSettings, IconUser } from '@tabler/icons';
+import { NavigationAccordian } from './types';
 
-export const MainRoutes: NavBarRoute[] = [
+export const MainRoutes: NavigationAccordian[] = [
 	{
 		href: '/home',
+		key: 'home',
 		title: 'Home',
-		userAuthenticated: true,
+		icon: <IconHome2 size={16} stroke={1.5} />,
+		userAuth: true,
 	},
 	{
 		href: '/profile',
+		key: 'profile',
 		title: 'Profile',
-		userAuthenticated: true,
+		icon: <IconUser size={16} stroke={1.5} />,
+		userAuth: true,
 		children: [
+			{
+				href: '/profile',
+				title: 'View Profile',
+				icon: <IconUser size={12} stroke={1.5} />,
+			},
 			{
 				href: '/profile/settings',
 				title: 'Settings',
-				userAuthenticated: true,
+				icon: <IconSettings size={12} stroke={1.5} />,
 			},
 		],
 	},
 	{
 		href: '/events',
 		title: 'Events',
-		userAuthenticated: true,
+		key: 'events',
+		icon: <IconCalendarEvent size={12} stroke={1.5} />,
+		userAuth: true,
+		children: [
+			{
+				href: '/events/view',
+				title: 'Find an Event',
+				icon: <IconCalendarEvent size={12} stroke={1.5} />,
+			},
+		],
 	},
 	{
 		href: '/login',
+		key: 'login',
 		title: 'Login',
-		userAuthenticated: false,
+		icon: <IconLogin size={12} stroke={1.5} />,
+		userAuth: false,
 	},
 	{
 		href: '/signup',
+		key: 'signup',
 		title: 'Sign Up',
-		userAuthenticated: false,
+		icon: <IconLogin size={12} stroke={1.5} />,
+		userAuth: false,
 	},
 ];

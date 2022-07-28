@@ -4,9 +4,17 @@ export interface HeaderProps {
 	opened: boolean;
 	setOpened: Dispatch<SetStateAction<boolean>>;
 }
-export interface NavBarRoute {
+interface NavBarRoute {
 	href: string;
 	title: string;
-	userAuthenticated: boolean;
+	icon: any;
+}
+
+export interface NavigationAccordian {
+	title: string;
+	key: string;
+	userAuth: boolean;
+	icon: any;
+	href: string;
 	children?: NavBarRoute[];
 }
