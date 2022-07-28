@@ -11,8 +11,15 @@ export const fetcher = async ({ url, method, body }: FETCH) => {
 			'Content-Type': 'application/json',
 		},
 	})
-		.then((res) => res.json())
+		.then((res) => {
+			return res.json();
+		})
 		.catch((e) => {
-			throw new Error(e);
+			console.log(e);
+			return {
+				error: true,
+				status: e.status,
+				statusText: e.statusText,
+			};
 		});
 };

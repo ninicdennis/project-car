@@ -15,12 +15,14 @@ const Store = createStore({
 			async ({ setState }) => {
 				const session = await getUser();
 				if (!session) return;
-				const user = await fetcher({
-					url: 'api/auth/getUser',
-					method: 'POST',
-					body: { id: session?.user?.id },
-				});
-				setState({ user, session });
+				else {
+					const user = await fetcher({
+						url: 'api/auth/getUser',
+						method: 'POST',
+						body: { id: session?.user?.id },
+					});
+					setState({ user, session });
+				}
 			},
 		login:
 			(data) =>
