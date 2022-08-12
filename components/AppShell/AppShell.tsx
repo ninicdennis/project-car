@@ -20,9 +20,7 @@ export const AppShellWrapper = ({ children }: { children: JSX.Element }) => {
 			footer={<FooterComponent />}
 			header={<HeaderComponent opened={opened} setOpened={setOpened} />}
 		>
-			<ScrollArea.Autosize maxHeight={'82vh'} mx='auto'>
-				{children}
-			</ScrollArea.Autosize>
+			{children}
 		</AppShell>
 	);
 };

@@ -10,6 +10,7 @@ import {
 	Text,
 	Group,
 	Divider,
+	Container,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import Router from 'next/router';
@@ -39,60 +40,76 @@ const ProfilePage = ({ user, session }: InitialState) => {
 	}, [session]);
 
 	return (
-		<Center>
-			<Card shadow='sm' p='lg'>
-				<Title style={{ marginBottom: 4 }}>Profile Settings</Title>
+		<Container>
+			<Title style={{ marginBottom: 4 }} order={2}>
+				Profile Settings
+			</Title>
+			<Divider style={{ marginBottom: 4 }} />
+			<div style={{ position: 'relative' }}>
 				<LoadingOverlay visible={visible} overlayBlur={2} />
-				<Divider style={{ marginBottom: 4 }} />
-				<div style={{ maxWidth: 400, position: 'relative' }}>
-					<Grid align='center'>
-						<Grid.Col>
-							<Text align='center'>Avatar</Text>
-							<div style={{ width: 400, marginLeft: 'auto', marginRight: 'auto' }}>
-								{!editImage ? (
-									<Image
-										radius='md'
-										src='https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80'
-										alt='Random unsplash image'
-									/>
-								) : (
-									<ImageDropzone />
-								)}
-							</div>
-						</Grid.Col>
-						{!editImage && <Button onClick={() => setEditImage(true)}>Edit</Button>}
+				<Grid align='center'>
+					<Grid.Col>
+						<Title style={{ marginBottom: 4 }} order={3}>
+							Avatar
+						</Title>
+						<div style={{ maxWidth: 250, maxHeight: 250, marginLeft: 'auto', marginRight: 'auto' }}>
+							{!editImage ? (
+								<Image
+									radius='md'
+									src='https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80'
+									alt='Random unsplash image'
+								/>
+							) : (
+								<ImageDropzone />
+							)}
+						</div>
+					</Grid.Col>
+					<Grid.Col>
+						{!editImage && (
+							<Button variant='outline' onClick={() => setEditImage(true)}>
+								Edit
+							</Button>
+						)}
 						{editImage && (
 							<Group>
-								<Button onClick={() => setEditImage(false)}>Save</Button>
+								<Button variant='outline' onClick={() => setEditImage(false)}>
+									Save
+								</Button>
 								<Button color='gray' onClick={() => setEditImage(false)}>
 									Cancel
 								</Button>
 							</Group>
 						)}
-						<form onSubmit={form.onSubmit((v) => console.log(v))}>
-							<Divider style={{ marginTop: 8, marginBottom: 8 }} />
-							<Grid justify='center' align='center'>
-								<Grid.Col sm={12} lg={6}>
-									<TextInput label='Username' {...form.getInputProps('username')} />
-								</Grid.Col>
-								<Grid.Col sm={12} lg={6}>
-									<TextInput label='Email' {...form.getInputProps('email')} />
-								</Grid.Col>
-								<Grid.Col sm={12} lg={6}>
-									<TextInput label='First Name' {...form.getInputProps('fName')} />
-								</Grid.Col>
-								<Grid.Col sm={12} lg={6}>
-									<TextInput label='Last Name' {...form.getInputProps('lName')} />
-								</Grid.Col>
-								<Grid.Col>
-									<Button type='submit'>Save</Button>
-								</Grid.Col>
-							</Grid>
-						</form>
-					</Grid>
-				</div>
-			</Card>
-		</Center>
+					</Grid.Col>
+
+					<form onSubmit={form.onSubmit((v) => console.log(v))}>
+						<Divider style={{ marginTop: 8, marginBottom: 8 }} />
+						<Title style={{ marginBottom: 4 }} order={3}>
+							Profile Information
+						</Title>
+						<Grid justify='center' align='center'>
+							<Grid.Col sm={12} lg={6}>
+								<TextInput disabled label='Username' {...form.getInputProps('username')} />
+							</Grid.Col>
+							<Grid.Col sm={12} lg={6}>
+								<TextInput label='Email' {...form.getInputProps('email')} />
+							</Grid.Col>
+							<Grid.Col sm={12} lg={6}>
+								<TextInput label='First Name' {...form.getInputProps('fName')} />
+							</Grid.Col>
+							<Grid.Col sm={12} lg={6}>
+								<TextInput label='Last Name' {...form.getInputProps('lName')} />
+							</Grid.Col>
+							<Grid.Col>
+								<Button variant='outline' type='submit'>
+									Save
+								</Button>
+							</Grid.Col>
+						</Grid>
+					</form>
+				</Grid>
+			</div>
+		</Container>
 	);
 };
 
