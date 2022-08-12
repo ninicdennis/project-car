@@ -1,5 +1,6 @@
 import { Navbar, Button, NavLink, Divider, useMantineTheme } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
+import { IconLogout } from '@tabler/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useUserState } from '../../stores/Authentication';
@@ -58,7 +59,9 @@ const NavBarComponenet = ({ opened }: { opened: boolean }) => {
 					</div>
 				);
 			})}
-			<div className={classes.flexEnd}>{userSession && <Button onClick={signOut}>Sign Out</Button>}</div>
+			<div className={classes.flexEnd}>
+				{userSession && <NavLink label={'Sign Out'} icon={<IconLogout />} onClick={signOut} />}
+			</div>
 		</Navbar>
 	);
 };
