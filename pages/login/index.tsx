@@ -1,10 +1,10 @@
 import { Card, Center, PasswordInput, Title, TextInput, Button, Grid, Group, LoadingOverlay } from '@mantine/core';
 import Link from 'next/link';
 import { useForm } from '@mantine/form';
-import { useUserState } from '../../stores/Authentication';
+import { useUserState } from '@stores/Authentication';
 import Router from 'next/router';
 import { showNotification } from '@mantine/notifications';
-import { InitialState } from '../../stores/types';
+import { InitialState } from '@stores/types';
 import { useState } from 'react';
 
 const LoginPage = ({ user, session }: InitialState) => {

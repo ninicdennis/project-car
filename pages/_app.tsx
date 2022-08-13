@@ -1,9 +1,9 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { MantineProvider } from '@mantine/core';
-import { AppShellWrapper } from '../components/AppShell';
+import { AppShellWrapper } from '@components/AppShell';
 import { NotificationsProvider } from '@mantine/notifications';
-import { useUserState } from '../stores/Authentication';
+import { useUserState } from '@stores/Authentication';
 import { useEffect } from 'react';
 
 export default function App(props: AppProps) {

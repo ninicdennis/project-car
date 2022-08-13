@@ -1,4 +1,4 @@
-import { AuthRegister } from '../../../stores/types';
+import { AuthRegister } from '@stores/types';
 import { PrismaClient } from '@prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 

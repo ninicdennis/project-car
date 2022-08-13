@@ -3,7 +3,7 @@ import { showNotification } from '@mantine/notifications';
 import { IconLogout } from '@tabler/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useUserState } from '../../stores/Authentication';
+import { useUserState } from '@stores/Authentication';
 import { MainRoutes } from './constants';
 import { useStyles } from './styles';
 

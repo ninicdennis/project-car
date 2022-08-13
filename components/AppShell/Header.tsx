@@ -1,6 +1,6 @@
 import { Header, MediaQuery, Burger, useMantineTheme, Image, Avatar } from '@mantine/core';
 import { HeaderProps } from './types';
-import { useUserState } from '../../stores/Authentication';
+import { useUserState } from '@stores/Authentication';
 import Router from 'next/router';
 import { useStyles } from './styles';
 

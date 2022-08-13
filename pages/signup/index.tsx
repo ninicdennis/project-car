@@ -13,9 +13,9 @@ import {
 import Link from 'next/link';
 import { useForm } from '@mantine/form';
 import Router from 'next/router';
-import { useUserState } from '../../stores/Authentication';
+import { useUserState } from '@stores/Authentication';
 import { showNotification } from '@mantine/notifications';
-import { InitialState } from '../../stores/types';
+import { InitialState } from '@stores/types';
 import { useState } from 'react';
 
 const RegisterPage = ({ user, session }: InitialState) => {

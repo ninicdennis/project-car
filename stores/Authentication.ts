@@ -1,6 +1,6 @@
 import { AuthRegister, AuthLogin, InitialState } from './types';
-import supabase from '../utils/supabase/init';
-import { fetcher } from '../utils/fetcher';
+import supabase from '@utils/supabase/init';
+import { fetcher } from '@utils/fetcher';
 import { createStore, createHook } from 'react-sweet-state';
 
 const initialState: InitialState = {

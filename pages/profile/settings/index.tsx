@@ -15,9 +15,9 @@ import {
 import { useForm } from '@mantine/form';
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
-import ImageDropzone from '../../../components/dropImage';
-import { InitialState } from '../../../stores/types';
-import { useStyles } from '../../../styles/profile/styles';
+import ImageDropzone from '@components/dropImage';
+import { InitialState } from '@stores/types';
+import useStyles from '@styles/profile';
 
 const ProfilePage = ({ user, session }: InitialState) => {
 	const { classes } = useStyles();

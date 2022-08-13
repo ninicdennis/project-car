@@ -1,7 +1,7 @@
 import { Text } from '@mantine/core';
 import Router from 'next/router';
 import { useEffect } from 'react';
-import { InitialState } from '../../stores/types';
+import { InitialState } from '@stores/types';
 
 const ViewEvents = ({ user, session }: InitialState) => {
 	useEffect(() => {
