@@ -1,11 +1,10 @@
 import { Card, Center, PasswordInput, Title, TextInput, Button, Grid, Group, LoadingOverlay } from '@mantine/core';
-import Link from 'next/link';
 import { useForm } from '@mantine/form';
 import { useUserState } from '@stores/Authentication';
 import Router from 'next/router';
-import { showNotification } from '@mantine/notifications';
 import { InitialState } from '@stores/types';
 import { useState } from 'react';
+import { notificationTrigger } from '@utils/notification';
 
 const LoginPage = ({ user, session }: InitialState) => {
 	const [, actions] = useUserState();
@@ -32,20 +31,14 @@ const LoginPage = ({ user, session }: InitialState) => {
 		actions
 			.login(form.values)
 			.then(() => {
-				showNotification({
-					title: 'Logged in!',
-					message: 'Welcome back!',
-					autoClose: 3000,
-					color: 'green',
-				});
+				notificationTrigger({ title: 'Logged in!', message: 'Welcome back!', type: 'success' });
 				setVisible(false);
 			})
 			.catch((err) => {
-				showNotification({
+				notificationTrigger({
 					title: 'Error!',
 					message: err.message,
-					autoClose: 3000,
-					color: 'red',
+					type: 'error',
 				});
 				setVisible(false);
 			});

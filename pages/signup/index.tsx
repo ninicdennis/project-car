@@ -1,22 +1,11 @@
-import {
-	Card,
-	Center,
-	PasswordInput,
-	Title,
-	TextInput,
-	Button,
-	Grid,
-	Group,
-	Loader,
-	LoadingOverlay,
-} from '@mantine/core';
+import { Card, Center, PasswordInput, Title, TextInput, Button, Grid, Group, LoadingOverlay } from '@mantine/core';
 import Link from 'next/link';
 import { useForm } from '@mantine/form';
 import Router from 'next/router';
 import { useUserState } from '@stores/Authentication';
-import { showNotification } from '@mantine/notifications';
 import { InitialState } from '@stores/types';
 import { useState } from 'react';
+import { notificationTrigger } from '@utils/notification';
 
 const RegisterPage = ({ user, session }: InitialState) => {
 	const [, actions] = useUserState();
@@ -48,20 +37,18 @@ const RegisterPage = ({ user, session }: InitialState) => {
 		actions
 			.register(form.values)
 			.then(() => {
-				showNotification({
+				notificationTrigger({
 					title: 'Logged in!',
 					message: 'Welcome!',
-					autoClose: 3000,
-					color: 'green',
+					type: 'success',
 				});
 				setVisible(false);
 			})
 			.catch((err) => {
-				showNotification({
+				notificationTrigger({
 					title: 'Error!',
 					message: err.message,
-					autoClose: 3000,
-					color: 'red',
+					type: 'error',
 				});
 				setVisible(false);
 			});

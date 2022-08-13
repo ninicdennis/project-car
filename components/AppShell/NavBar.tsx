@@ -1,11 +1,11 @@
-import { Navbar, Button, NavLink, Divider, useMantineTheme } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
+import { Navbar, NavLink, Divider, useMantineTheme } from '@mantine/core';
 import { IconLogout } from '@tabler/icons';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useUserState } from '@stores/Authentication';
 import { MainRoutes } from './constants';
 import { useStyles } from './styles';
+import { notificationTrigger } from '@utils/notification';
 
 const NavBarComponenet = ({ opened }: { opened: boolean }) => {
 	const [{ session: userSession }, actions] = useUserState();
@@ -16,11 +16,10 @@ const NavBarComponenet = ({ opened }: { opened: boolean }) => {
 
 	const signOut = async () => {
 		actions.signOut().then(() =>
-			showNotification({
+			notificationTrigger({
 				title: 'Logged out!',
 				message: 'See you soon!',
-				autoClose: 3000,
-				color: 'green',
+				type: 'success',
 			})
 		);
 	};
