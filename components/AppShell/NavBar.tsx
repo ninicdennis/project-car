@@ -53,7 +53,7 @@ const NavBarComponenet = ({ opened }: { opened: boolean }) => {
 					<div key={key}>
 						<Link href={href} passHref>
 							<NavLink
-								styles={{ label: { fontSize: 18 } }}
+								styles={{ label: { fontSize: 20 } }}
 								icon={navIcon(getColor)}
 								label={title}
 								component='a'
