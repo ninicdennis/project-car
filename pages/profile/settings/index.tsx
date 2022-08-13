@@ -17,8 +17,10 @@ import Router from 'next/router';
 import { useEffect, useState } from 'react';
 import ImageDropzone from '../../../components/dropImage';
 import { InitialState } from '../../../stores/types';
+import { useStyles } from '../../../styles/profile/styles';
 
 const ProfilePage = ({ user, session }: InitialState) => {
+	const { classes } = useStyles();
 	const [visible, setVisible] = useState(false);
 	const [editImage, setEditImage] = useState(false);
 	const form = useForm({
@@ -40,25 +42,21 @@ const ProfilePage = ({ user, session }: InitialState) => {
 	}, [session]);
 
 	return (
-		<Container>
-			<Title style={{ marginBottom: 4 }} order={2}>
+		<Container size='xl'>
+			<Title className={classes.marginBot} order={2}>
 				Profile Settings
 			</Title>
-			<Divider style={{ marginBottom: 4 }} />
+			<Divider className={classes.marginBot} />
 			<div style={{ position: 'relative' }}>
 				<LoadingOverlay visible={visible} overlayBlur={2} />
 				<Grid align='center'>
 					<Grid.Col>
-						<Title style={{ marginBottom: 4 }} order={3}>
+						<Title className={classes.marginBot} order={3}>
 							Avatar
 						</Title>
-						<div style={{ maxWidth: 250, maxHeight: 250, marginLeft: 'auto', marginRight: 'auto' }}>
+						<div className={classes.imageSizing}>
 							{!editImage ? (
-								<Image
-									radius='md'
-									src='https://images.unsplash.com/photo-1511216335778-7cb8f49fa7a3?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=720&q=80'
-									alt='Random unsplash image'
-								/>
+								<Image radius='md' src='/media/logo.png' alt='Random unsplash image' />
 							) : (
 								<ImageDropzone />
 							)}
@@ -81,32 +79,33 @@ const ProfilePage = ({ user, session }: InitialState) => {
 							</Group>
 						)}
 					</Grid.Col>
-
-					<form onSubmit={form.onSubmit((v) => console.log(v))}>
-						<Divider style={{ marginTop: 8, marginBottom: 8 }} />
-						<Title style={{ marginBottom: 4 }} order={3}>
-							Profile Information
-						</Title>
-						<Grid justify='center' align='center'>
-							<Grid.Col sm={12} lg={6}>
-								<TextInput disabled label='Username' {...form.getInputProps('username')} />
-							</Grid.Col>
-							<Grid.Col sm={12} lg={6}>
-								<TextInput label='Email' {...form.getInputProps('email')} />
-							</Grid.Col>
-							<Grid.Col sm={12} lg={6}>
-								<TextInput label='First Name' {...form.getInputProps('fName')} />
-							</Grid.Col>
-							<Grid.Col sm={12} lg={6}>
-								<TextInput label='Last Name' {...form.getInputProps('lName')} />
-							</Grid.Col>
-							<Grid.Col>
-								<Button variant='outline' type='submit'>
-									Save
-								</Button>
-							</Grid.Col>
-						</Grid>
-					</form>
+					<Grid.Col>
+						<form onSubmit={form.onSubmit((v) => console.log(v))}>
+							<Divider className={classes.marginTopBot} />
+							<Title className={classes.marginBot} order={3}>
+								Profile Information
+							</Title>
+							<Grid justify='center' align='center'>
+								<Grid.Col sm={12} lg={6}>
+									<TextInput disabled label='Username' {...form.getInputProps('username')} />
+								</Grid.Col>
+								<Grid.Col sm={12} lg={6}>
+									<TextInput label='Email' {...form.getInputProps('email')} />
+								</Grid.Col>
+								<Grid.Col sm={12} lg={6}>
+									<TextInput label='First Name' {...form.getInputProps('fName')} />
+								</Grid.Col>
+								<Grid.Col sm={12} lg={6}>
+									<TextInput label='Last Name' {...form.getInputProps('lName')} />
+								</Grid.Col>
+								<Grid.Col>
+									<Button variant='outline' type='submit'>
+										Save
+									</Button>
+								</Grid.Col>
+							</Grid>
+						</form>
+					</Grid.Col>
 				</Grid>
 			</div>
 		</Container>

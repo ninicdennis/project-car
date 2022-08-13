@@ -26,14 +26,14 @@ const NavBarComponenet = ({ opened }: { opened: boolean }) => {
 	};
 
 	return (
-		<Navbar p='md' hiddenBreakpoint='sm' hidden={!opened} width={{ sm: 200, lg: 200 }}>
+		<Navbar p='md' hiddenBreakpoint='sm' hidden={!opened} width={{ sm: 300, lg: 300 }}>
 			{MainRoutes.map(({ key, href, userAuth, title, children, icon: navIcon }) => {
 				if (userAuth && !userSession) return null;
 				if (!userAuth && userSession) return null;
 				if (children) {
 					return (
 						<div key={key}>
-							<NavLink label={title} icon={navIcon(getColor)}>
+							<NavLink label={title} icon={navIcon(getColor)} styles={{ label: { fontSize: 20 } }}>
 								{children?.map(({ href: hrefChild, title: titleChild, icon }) => (
 									<Link key={hrefChild} href={hrefChild} passHref>
 										<NavLink
@@ -41,7 +41,7 @@ const NavBarComponenet = ({ opened }: { opened: boolean }) => {
 											label={titleChild}
 											component='a'
 											active={router.pathname === hrefChild}
-											styles={{ label: { fontSize: 12 } }}
+											styles={{ label: { fontSize: 18 } }}
 										/>
 									</Link>
 								))}
@@ -53,7 +53,13 @@ const NavBarComponenet = ({ opened }: { opened: boolean }) => {
 				return (
 					<div key={key}>
 						<Link href={href} passHref>
-							<NavLink icon={navIcon(getColor)} label={title} component='a' active={router.pathname === href} />
+							<NavLink
+								styles={{ label: { fontSize: 18 } }}
+								icon={navIcon(getColor)}
+								label={title}
+								component='a'
+								active={router.pathname === href}
+							/>
 						</Link>
 						<Divider my='sm' />
 					</div>

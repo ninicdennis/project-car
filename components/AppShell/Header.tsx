@@ -1,4 +1,4 @@
-import { Header, MediaQuery, Burger, useMantineTheme, Title, Text, Avatar } from '@mantine/core';
+import { Header, MediaQuery, Burger, useMantineTheme, Image, Avatar } from '@mantine/core';
 import { HeaderProps } from './types';
 import { useUserState } from '../../stores/Authentication';
 import Router from 'next/router';
@@ -10,22 +10,23 @@ const HeaderComponent = ({ opened, setOpened }: HeaderProps) => {
 	const [{ user, session: userSession }] = useUserState();
 
 	return (
-		<Header height={70} p='md'>
+		<Header height={100} p='md'>
 			<div className={classes.centerFlexHeight}>
 				<MediaQuery largerThan='sm' styles={{ display: 'none' }}>
-					<Burger
-						opened={opened}
-						onClick={() => setOpened((o) => !o)}
-						size='sm'
-						color={theme.colors.gray[6]}
-						mr='xl'
-					/>
+					<Burger opened={opened} onClick={() => setOpened((o) => !o)} size='md' color={theme.colors.gray[6]} />
 				</MediaQuery>
 				<div className={classes.flexSpaceBetween}>
-					<Title onClick={() => Router.push('/')} order={2} className={classes.cursorPointer}>
-						Project: Car
-					</Title>
-					{userSession && <Avatar radius='sm' src={null} />}
+					<div style={{ flex: 10, justifyContent: 'center', display: 'flex' }}>
+						<Image
+							src='/media/logo.png'
+							width={256 / 2}
+							height={149 / 2}
+							onClick={() => Router.push('/')}
+							className={classes.cursorPointer}
+						/>
+					</div>
+
+					{userSession && <Avatar radius='sm' size='lg' src={null} />}
 				</div>
 			</div>
 		</Header>

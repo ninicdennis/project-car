@@ -12,7 +12,7 @@ const ImageDropzone = (props: Partial<DropzoneProps>) => {
 			accept={IMAGE_MIME_TYPE}
 			{...props}
 		>
-			<Group position='center' spacing='xl' style={{ minHeight: 200, pointerEvents: 'none' }}>
+			<Group position='center' spacing='xl' style={{ minHeight: 150, pointerEvents: 'none' }}>
 				<Dropzone.Accept>
 					<IconUpload
 						size={50}
