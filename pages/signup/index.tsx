@@ -56,7 +56,7 @@ const RegisterPage = ({ session }: InitialState) => {
 	};
 
 	return (
-		<Center>
+		<Center data-testid='signup-main' style={{ height: '100%' }}>
 			<Card shadow='sm' p='lg'>
 				<Title sx={{ marginBottom: 8 }}>Register</Title>
 				<div style={{ maxWidth: 400, position: 'relative' }}>

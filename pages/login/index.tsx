@@ -45,7 +45,7 @@ const LoginPage = ({ session }: InitialState) => {
 	};
 
 	return (
-		<Center data-testid='login-main'>
+		<Center data-testid='login-main' style={{ height: '100%' }}>
 			<Card shadow='sm' p='lg'>
 				<Title sx={{ marginBottom: 8 }}>Login</Title>
 				<div style={{ maxWidth: 400, position: 'relative' }}>

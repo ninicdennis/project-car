@@ -5,4 +5,5 @@ export const useStyles = createStyles({
 	flexSpaceBetween: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' },
 	flexEnd: { display: 'flex', alignItems: 'flex-end', justifyContent: 'center', height: '100%' },
 	cursorPointer: { cursor: 'pointer' },
+	headerFlex: { flex: 10, justifyContent: 'center', display: 'flex' },
 });

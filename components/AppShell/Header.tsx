@@ -16,7 +16,7 @@ const HeaderComponent = ({ opened, setOpened }: HeaderProps) => {
 					<Burger opened={opened} onClick={() => setOpened((o) => !o)} size='md' color={theme.colors.gray[6]} />
 				</MediaQuery>
 				<div className={classes.flexSpaceBetween}>
-					<div style={{ flex: 10, justifyContent: 'center', display: 'flex' }}>
+					<div className={classes.headerFlex}>
 						<Image
 							src='/media/logo.png'
 							width={256 / 2}
