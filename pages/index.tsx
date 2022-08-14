@@ -1,6 +1,6 @@
-import { InitialState } from '@stores/types';
-
-const Homepage = ({ user, session: userSession }: InitialState) => {
+// import { InitialState } from '@stores/types';
+// { user, session: userSession }: InitialState
+const Homepage = () => {
 	return <div>Root page</div>;
 };
 

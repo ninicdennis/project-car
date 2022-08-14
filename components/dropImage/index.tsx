@@ -5,13 +5,7 @@ import { Dropzone, DropzoneProps, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 const ImageDropzone = (props: Partial<DropzoneProps>) => {
 	const theme = useMantineTheme();
 	return (
-		<Dropzone
-			onDrop={(files) => console.log('accepted files', files)}
-			onReject={(files) => console.log('rejected files', files)}
-			maxSize={3 * 1024 ** 2}
-			accept={IMAGE_MIME_TYPE}
-			{...props}
-		>
+		<Dropzone onDrop={(files) => files} maxSize={3 * 1024 ** 2} accept={IMAGE_MIME_TYPE} {...props}>
 			<Group position='center' spacing='xl' style={{ minHeight: 150, pointerEvents: 'none' }}>
 				<Dropzone.Accept>
 					<IconUpload

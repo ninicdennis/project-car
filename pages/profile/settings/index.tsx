@@ -1,17 +1,4 @@
-import {
-	Center,
-	Title,
-	Card,
-	TextInput,
-	LoadingOverlay,
-	Grid,
-	Button,
-	Image,
-	Text,
-	Group,
-	Divider,
-	Container,
-} from '@mantine/core';
+import { Title, TextInput, LoadingOverlay, Grid, Button, Image, Group, Divider, Container } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import Router from 'next/router';
 import { useEffect, useState } from 'react';
@@ -19,9 +6,10 @@ import ImageDropzone from '@components/dropImage';
 import { InitialState } from '@stores/types';
 import useStyles from '@styles/profile';
 
-const ProfilePage = ({ user, session }: InitialState) => {
+const ProfilePage = ({ session }: InitialState) => {
 	const { classes } = useStyles();
-	const [visible, setVisible] = useState(false);
+	// const [visible, setVisible] = useState(false); // ? used for when setVisible is needed
+	const visible = false;
 	const [editImage, setEditImage] = useState(false);
 	const form = useForm({
 		initialValues: {
@@ -80,7 +68,7 @@ const ProfilePage = ({ user, session }: InitialState) => {
 						)}
 					</Grid.Col>
 					<Grid.Col>
-						<form onSubmit={form.onSubmit((v) => console.log(v))}>
+						<form onSubmit={form.onSubmit((v) => v)}>
 							<Divider className={classes.marginTopBot} />
 							<Title className={classes.marginBot} order={3}>
 								Profile Information

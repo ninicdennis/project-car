@@ -7,7 +7,7 @@ import { useStyles } from './styles';
 const HeaderComponent = ({ opened, setOpened }: HeaderProps) => {
 	const { classes } = useStyles();
 	const theme = useMantineTheme();
-	const [{ user, session: userSession }] = useUserState();
+	const [{ session: userSession }] = useUserState();
 
 	return (
 		<Header height={100} p='md'>

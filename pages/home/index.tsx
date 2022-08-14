@@ -3,7 +3,7 @@ import Router from 'next/router';
 import { useEffect } from 'react';
 import { InitialState } from '@stores/types';
 
-const Homepage = ({ user, session }: InitialState) => {
+const Homepage = ({ session }: InitialState) => {
 	useEffect(() => {
 		if (!session) Router.push('/');
 	}, [session]);

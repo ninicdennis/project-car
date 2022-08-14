@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppShell, useMantineTheme, ScrollArea } from '@mantine/core';
+import { AppShell, useMantineTheme } from '@mantine/core';
 import HeaderComponent from './Header';
 import FooterComponent from './Footer';
 import NavBarComponenet from './NavBar';
@@ -16,7 +16,7 @@ export const AppShellWrapper = ({ children }: { children: JSX.Element }) => {
 			navbarOffsetBreakpoint='sm'
 			asideOffsetBreakpoint='sm'
 			fixed
-			navbar={<NavBarComponenet opened={opened} />}
+			navbar={<NavBarComponenet opened={opened} setOpened={setOpened} />}
 			footer={<FooterComponent />}
 			header={<HeaderComponent opened={opened} setOpened={setOpened} />}
 		>

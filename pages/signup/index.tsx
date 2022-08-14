@@ -6,8 +6,16 @@ import { useUserState } from '@stores/Authentication';
 import { InitialState } from '@stores/types';
 import { useState } from 'react';
 import { notificationTrigger } from '@utils/notification';
+import { UseFormReturnType } from '@mantine/form/lib/types';
 
-const RegisterPage = ({ user, session }: InitialState) => {
+type FormValues = {
+	email: string;
+	password: string;
+	username: string;
+	secondaryPassword: string;
+};
+
+const RegisterPage = ({ session }: InitialState) => {
 	const [, actions] = useUserState();
 	const [visible, setVisible] = useState(false);
 
@@ -15,7 +23,7 @@ const RegisterPage = ({ user, session }: InitialState) => {
 		Router.push('/home');
 	}
 
-	const form: any = useForm({
+	const form: UseFormReturnType<FormValues> = useForm<FormValues>({
 		initialValues: {
 			email: '',
 			password: '',
@@ -32,7 +40,6 @@ const RegisterPage = ({ user, session }: InitialState) => {
 	});
 
 	const register = () => {
-		console.log('test');
 		setVisible(true);
 		actions
 			.register(form.values)

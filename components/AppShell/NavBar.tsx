@@ -6,8 +6,9 @@ import { useUserState } from '@stores/Authentication';
 import { MainRoutes } from './constants';
 import { useStyles } from './styles';
 import { notificationTrigger } from '@utils/notification';
+import { Dispatch, SetStateAction } from 'react';
 
-const NavBarComponenet = ({ opened }: { opened: boolean }) => {
+const NavBarComponenet = ({ opened, setOpened }: { opened: boolean; setOpened: Dispatch<SetStateAction<boolean>> }) => {
 	const [{ session: userSession }, actions] = useUserState();
 	const router = useRouter();
 	const { classes } = useStyles();
@@ -15,6 +16,7 @@ const NavBarComponenet = ({ opened }: { opened: boolean }) => {
 	const getColor = (color: string) => theme.colors[color][theme.colorScheme === 'dark' ? 5 : 7];
 
 	const signOut = async () => {
+		setOpened(false);
 		actions.signOut().then(() =>
 			notificationTrigger({
 				title: 'Logged out!',
@@ -36,6 +38,7 @@ const NavBarComponenet = ({ opened }: { opened: boolean }) => {
 								{children?.map(({ href: hrefChild, title: titleChild, icon }) => (
 									<Link key={hrefChild} href={hrefChild} passHref>
 										<NavLink
+											onClick={() => setOpened(false)}
 											icon={icon(getColor)}
 											label={titleChild}
 											component='a'
@@ -53,6 +56,7 @@ const NavBarComponenet = ({ opened }: { opened: boolean }) => {
 					<div key={key}>
 						<Link href={href} passHref>
 							<NavLink
+								onClick={() => setOpened(false)}
 								styles={{ label: { fontSize: 20 } }}
 								icon={navIcon(getColor)}
 								label={title}

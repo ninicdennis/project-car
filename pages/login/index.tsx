@@ -6,7 +6,7 @@ import { InitialState } from '@stores/types';
 import { useState } from 'react';
 import { notificationTrigger } from '@utils/notification';
 
-const LoginPage = ({ user, session }: InitialState) => {
+const LoginPage = ({ session }: InitialState) => {
 	const [, actions] = useUserState();
 	const [visible, setVisible] = useState(false);
 
