@@ -53,7 +53,7 @@ export const MainRoutes: NavigationAccordian[] = [
 			},
 			{
 				href: '/groups/create',
-				title: 'Crete Groups',
+				title: 'Create Groups',
 				icon: (getColor) => <IconPlus size={16} stroke={1.5} color={getColor('violet')} />,
 			},
 		],
