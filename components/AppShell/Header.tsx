@@ -1,4 +1,4 @@
-import { Header, MediaQuery, Burger, useMantineTheme, Image, Avatar } from '@mantine/core';
+import { Header, MediaQuery, Burger, useMantineTheme, Image, Avatar, Menu, Text, Indicator } from '@mantine/core';
 import { HeaderProps } from './types';
 import { useUserState } from '@stores/Authentication';
 import Router from 'next/router';
@@ -12,10 +12,10 @@ const HeaderComponent = ({ opened, setOpened }: HeaderProps) => {
 	return (
 		<Header height={100} p='md'>
 			<div className={classes.centerFlexHeight}>
-				<MediaQuery largerThan='sm' styles={{ display: 'none' }}>
-					<Burger opened={opened} onClick={() => setOpened((o) => !o)} size='md' color={theme.colors.gray[6]} />
-				</MediaQuery>
 				<div className={classes.flexSpaceBetween}>
+					<MediaQuery largerThan='sm' styles={{ display: 'none' }}>
+						<Burger opened={opened} onClick={() => setOpened((o) => !o)} size='md' color={theme.colors.gray[6]} />
+					</MediaQuery>
 					<div className={classes.headerFlex}>
 						<Image
 							src='/media/logo.png'
@@ -26,7 +26,22 @@ const HeaderComponent = ({ opened, setOpened }: HeaderProps) => {
 						/>
 					</div>
 
-					{userSession && <Avatar radius='sm' size='lg' src={null} />}
+					{userSession && (
+						<div className={classes.flexCenter}>
+							<Menu position='bottom-end' withArrow>
+								<Menu.Target>
+									<Indicator color='yellow'>
+										<Avatar radius='sm' size='lg' src={null} className={classes.cursorPointer} />
+									</Indicator>
+								</Menu.Target>
+								<Menu.Dropdown>
+									<Menu.Item>
+										<Text>Notifications go here !</Text>
+									</Menu.Item>
+								</Menu.Dropdown>
+							</Menu>
+						</div>
+					)}
 				</div>
 			</div>
 		</Header>
