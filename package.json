@@ -31,16 +31,16 @@
 		"next": "12.2.5",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
-		"react-sweet-state": "^2.6.2"
+		"react-sweet-state": "^2.6.4"
 	},
 	"devDependencies": {
 		"@next/eslint-plugin-next": "^12.2.5",
 		"@testing-library/jest-dom": "^5.16.5",
 		"@testing-library/react": "^13.3.0",
-		"@types/node": "^18.7.3",
+		"@types/node": "^18.7.5",
 		"@types/react": "18.0.17",
-		"@typescript-eslint/eslint-plugin": "^5.33.0",
-		"@typescript-eslint/parser": "^5.33.0",
+		"@typescript-eslint/eslint-plugin": "^5.33.1",
+		"@typescript-eslint/parser": "^5.33.1",
 		"eslint": "^8.22.0",
 		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-prettier": "^4.2.1",
