@@ -1,17 +1,19 @@
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { MantineProvider } from '@mantine/core';
+import { LoadingOverlay, MantineProvider } from '@mantine/core';
 import { AppShellWrapper } from '@components/AppShell';
 import { NotificationsProvider } from '@mantine/notifications';
 import { useUserState } from '@stores/Authentication';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export default function App(props: AppProps) {
 	const { Component, pageProps } = props;
 	const [{ user, session }, actions] = useUserState();
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		actions.getUserSession();
+		setLoading(true);
+		actions.getUserSession().then(() => setLoading(false));
 	}, []);
 
 	return (
@@ -30,6 +32,7 @@ export default function App(props: AppProps) {
 				}}
 			>
 				<NotificationsProvider>
+					<LoadingOverlay visible={loading} />
 					<AppShellWrapper>
 						<Component {...pageProps} user={user} session={session} />
 					</AppShellWrapper>
