@@ -1,7 +1,7 @@
 export interface FETCH {
 	url: string;
 	method: 'POST' | 'GET' | 'DELETE' | 'PUT' | 'PATCH';
-	body?: Object;
+	body?: Record<string, unknown>;
 }
 export const fetcher = async ({ url, method, body }: FETCH) => {
 	return await fetch(url, {
@@ -15,7 +15,7 @@ export const fetcher = async ({ url, method, body }: FETCH) => {
 			return res.json();
 		})
 		.catch((e) => {
-			console.log(e);
+			console.log('Error! ', e);
 			return {
 				error: true,
 				status: e.status,

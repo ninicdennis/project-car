@@ -41,13 +41,15 @@ const Store = createStore({
 				await createUser(data).then(async (values) => {
 					if (values) {
 						const session = await getUser();
-
 						const user = await fetcher({
 							url: 'api/auth/createUser',
 							method: 'POST',
 							body: { username: data.username, id: values.id, email: data.email },
 						});
-						setState({ user, session });
+						if (user.error) throw new Error(user.error);
+						if (user) {
+							setState({ user, session });
+						} else setState(initialState);
 					}
 				});
 			},
