@@ -7,4 +7,6 @@ export const useStyles = createStyles({
 	cursorPointer: { cursor: 'pointer' },
 	headerFlex: { justifyContent: 'center', display: 'flex', marginLeft: 'auto', marginRight: 'auto' },
 	flexCenter: { display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' },
+	notificationSplit: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: 400 },
+	iconBox: { marginRight: 4, flex: 2 },
 });

@@ -3,6 +3,7 @@ import { HeaderProps } from './types';
 import { useUserState } from '@stores/Authentication';
 import Router from 'next/router';
 import { useStyles } from './styles';
+import { IconAlertCircle, IconCalendarEvent } from '@tabler/icons';
 
 const HeaderComponent = ({ opened, setOpened }: HeaderProps) => {
 	const { classes } = useStyles();
@@ -28,7 +29,7 @@ const HeaderComponent = ({ opened, setOpened }: HeaderProps) => {
 
 					{userSession && (
 						<div className={classes.flexCenter}>
-							<Menu position='bottom-end' withArrow>
+							<Menu position='bottom-end' withArrow withinPortal>
 								<Menu.Target>
 									<Indicator color='yellow'>
 										<Avatar radius='sm' size='lg' src={null} className={classes.cursorPointer} />
@@ -36,7 +37,44 @@ const HeaderComponent = ({ opened, setOpened }: HeaderProps) => {
 								</Menu.Target>
 								<Menu.Dropdown>
 									<Menu.Item>
-										<Text>Notifications go here !</Text>
+										<div className={classes.notificationSplit}>
+											<div className={classes.iconBox}>
+												<Avatar radius='sm' size='lg' src={null} />
+											</div>
+											<Text style={{ flex: 10 }}>@username has followed you!</Text>
+										</div>
+									</Menu.Item>
+									<Menu.Item>
+										<div className={classes.notificationSplit}>
+											<div className={classes.iconBox}>
+												<Avatar radius='sm' size='lg' src={null} />
+											</div>
+											<Text style={{ flex: 10 }}>@username liked your post! Longer text for alignment!</Text>
+										</div>
+									</Menu.Item>
+									<Menu.Item>
+										<div className={classes.notificationSplit}>
+											<div className={classes.iconBox}>
+												<Avatar radius='sm' size='lg' src={null} />
+											</div>
+											<Text style={{ flex: 10 }}>@username commented on your post!</Text>
+										</div>
+									</Menu.Item>
+									<Menu.Item>
+										<div className={classes.notificationSplit}>
+											<div className={classes.iconBox}>
+												<IconCalendarEvent width={48} height={48} color='orange' />
+											</div>
+											<Text style={{ flex: 10 }}>@event is happening soon!</Text>
+										</div>
+									</Menu.Item>
+									<Menu.Item>
+										<div className={classes.notificationSplit}>
+											<div className={classes.iconBox}>
+												<IconAlertCircle width={48} height={48} color='red' />
+											</div>
+											<Text style={{ flex: 10 }}>Something happening, not sure what though!</Text>
+										</div>
 									</Menu.Item>
 								</Menu.Dropdown>
 							</Menu>
