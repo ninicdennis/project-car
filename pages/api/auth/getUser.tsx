@@ -9,6 +9,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	} else {
 		res.status(400).json({
 			error: true,
+			message: 'No specified user with that ID.',
 		});
 	}
 }
