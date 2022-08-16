@@ -14,9 +14,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 		});
 
 		res.status(200).json(response);
+	} else {
+		res.status(400).json({
+			error: true,
+		});
 	}
-	// ? TODO: Figure out why this doesnt send a response back
-	res.status(400).json({
-		error: true,
-	});
 }
