@@ -14,8 +14,10 @@ const Homepage = ({ session }: InitialState) => {
 					<Grid.Col xs={12} md={6} lg={5}>
 						<Center style={{ height: '100%' }}>
 							<Stack align={'center'}>
-								<Title align='center'>The Cleanest Car Scene Social Media</Title>
-								<Text>
+								<Title order={2} align={'center'}>
+									The Cleanest Car Scene Social Media
+								</Title>
+								<Text align={'center'}>
 									Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at nisl vulputate,
 									dapibus augue nec, auctor enim. Etiam dictum interdum vulputate. Integer facilisis fringilla
 									laoreet. Nulla et augue luctus, mattis lorem non, rhoncus lacus.

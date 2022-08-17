@@ -34,10 +34,16 @@ const NavBarComponenet = ({ opened, setOpened }: { opened: boolean; setOpened: D
 					else if (children) {
 						return (
 							<div key={key}>
-								<NavLink label={title} icon={navIcon(getColor)} styles={{ label: { fontSize: 20 } }}>
+								<NavLink
+									color={'blue'}
+									label={title}
+									icon={navIcon(getColor)}
+									styles={{ label: { fontSize: 20 } }}
+								>
 									{children?.map(({ href: hrefChild, title: titleChild, icon }) => (
 										<Link key={hrefChild} href={hrefChild} passHref>
 											<NavLink
+												color={'blue'}
 												onClick={() => setOpened(false)}
 												icon={icon(getColor)}
 												label={titleChild}
@@ -56,6 +62,7 @@ const NavBarComponenet = ({ opened, setOpened }: { opened: boolean; setOpened: D
 						<div key={key}>
 							<Link href={href} passHref>
 								<NavLink
+									color={'blue'}
 									onClick={() => setOpened(false)}
 									styles={{ label: { fontSize: 20 } }}
 									icon={navIcon(getColor)}
