@@ -20,3 +20,16 @@ export interface InitialState {
 	};
 	session: Session | null;
 }
+
+export interface UserResponse {
+	id: string;
+	username: string;
+	email: string;
+	image_url: string;
+}
+
+export interface ErrorResponse {
+	error: boolean;
+	code: string | undefined;
+	message: string;
+}

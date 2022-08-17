@@ -1,7 +1,9 @@
-import { AuthRegister, AuthLogin, InitialState } from './types';
+import { AuthRegister, AuthLogin, InitialState, UserResponse } from './types';
 import supabase from '@utils/supabase/init';
-import { fetcher } from '@utils/fetcher';
+import { callPost } from '@utils/requests';
 import { createStore, createHook } from 'react-sweet-state';
+import { AxiosResponse } from 'axios';
+import { notificationTrigger } from '@utils/notification';
 
 const initialState: InitialState = {
 	user: { id: '', username: '', email: '', image_url: '' },
@@ -16,40 +18,66 @@ const Store = createStore({
 				const session = await getUser();
 				if (!session) return;
 				else {
-					const user = await fetcher({
-						url: 'api/auth/getUser',
-						method: 'POST',
-						body: { id: session?.user?.id },
-					});
-					setState({ user, session });
+					try {
+						const response: AxiosResponse<UserResponse> = await callPost({
+							url: 'api/auth/getUser',
+							body: { id: session?.user?.id },
+						});
+						if (response.data) {
+							setState({ user: response.data, session });
+						} else setState(initialState);
+					} catch (e) {
+						notificationTrigger({ title: 'Error!', message: 'Could not get user session!', type: 'error' });
+					}
 				}
 			},
 		login:
 			(data) =>
 			async ({ setState }) => {
-				await loginUser(data).then(async (values) => {
-					if (values) {
-						const session = await getUser();
-						const user = await fetcher({ url: 'api/auth/getUser', method: 'POST', body: { id: values.id } });
-						setState({ user, session });
-					}
-				});
+				await loginUser(data)
+					.then(async (values) => {
+						if (values) {
+							const session = await getUser();
+							try {
+								const response: AxiosResponse<UserResponse> = await callPost({
+									url: 'api/auth/getUser',
+									body: { id: values.id },
+								});
+								if (response.data) {
+									setState({ user: response.data, session });
+								} else setState(initialState);
+							} catch (e) {
+								notificationTrigger({ title: 'Error!', message: 'Could not get user session!', type: 'error' });
+							}
+						}
+					})
+					.catch(() =>
+						notificationTrigger({ title: 'Error!', message: 'Login failed, try again.', type: 'error' })
+					);
 			},
 		register:
 			(data) =>
 			async ({ setState }) => {
-				await createUser(data).then(async (values) => {
-					if (values) {
-						const session = await getUser();
-
-						const user = await fetcher({
-							url: 'api/auth/createUser',
-							method: 'POST',
-							body: { username: data.username, id: values.id, email: data.email },
-						});
-						setState({ user, session });
-					}
-				});
+				await createUser(data)
+					.then(async (values) => {
+						if (values) {
+							const session = await getUser();
+							try {
+								const response: AxiosResponse<UserResponse> = await callPost({
+									url: 'api/auth/createUser',
+									body: { username: data.username, id: values.id, email: data.email },
+								});
+								if (response.data) {
+									setState({ user: response.data, session });
+								} else setState(initialState);
+							} catch (e) {
+								notificationTrigger({ title: 'Error!', message: 'Could not get user session!', type: 'error' });
+							}
+						}
+					})
+					.catch(() =>
+						notificationTrigger({ title: 'Error!', message: 'Signup failed, try again.', type: 'error' })
+					);
 			},
 		signOut:
 			() =>
