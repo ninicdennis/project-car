@@ -16,10 +16,17 @@ Version 0.1.0 will be an updated mess until I get more changes added, as this is
 -  Logo imported!
 -  Mockup for Profile settings added.
 -  Mockup for Notifications added.
+-  Mockup for Homepage added with helper text.
+-  Added package for carousel to display event data.
+-  Groups have been added as a page and navlink. Placeholder view.
 
 ### Changed
 
 -  Changed profile icon to have a notification dropdown with indicator.
+-  Data fetching has been changed into an axios function, to help with data standardization.
+-  Navbar now using sections in order to contain proper dropdowns.
+-  Prisma client now handled properly with Next.js refresh.
+-  Notification triggers happen for any failed API call.
 
 ### Removed
 
