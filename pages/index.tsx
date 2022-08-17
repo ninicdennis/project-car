@@ -57,7 +57,7 @@ const Homepage = ({ session }: InitialState) => {
 							<Title order={2}>{title}</Title>
 							<Text>{subtext}</Text>
 							<Space h='xl' />
-							<Link href={href} passHref>
+							<Link href={session ? href : '/login'} passHref>
 								<Button component='a' variant='outline'>
 									{buttonSubtext}
 								</Button>
