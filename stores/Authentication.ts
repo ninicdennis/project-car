@@ -20,7 +20,7 @@ const Store = createStore({
 				else {
 					try {
 						const response: AxiosResponse<UserResponse> = await callPost({
-							url: 'api/auth/getUser',
+							url: '/api/auth',
 							body: { id: session?.user?.id },
 						});
 						if (response.data) {
@@ -40,7 +40,7 @@ const Store = createStore({
 							const session = await getUser();
 							try {
 								const response: AxiosResponse<UserResponse> = await callPost({
-									url: 'api/auth/getUser',
+									url: '/api/auth',
 									body: { id: values.id },
 								});
 								if (response.data) {
@@ -67,7 +67,7 @@ const Store = createStore({
 							const session = await getUser();
 							try {
 								const response: AxiosResponse<UserResponse> = await callPost({
-									url: 'api/auth/createUser',
+									url: '/api/auth/register',
 									body: { username: data.username, id: values.id, email: data.email },
 								});
 								if (response.data) {

@@ -1,7 +1,7 @@
-import { AuthRegister } from '@stores/types';
 import { prisma } from '@utils/prisma';
-import { randomUUID } from 'crypto';
 import { NextApiRequest, NextApiResponse } from 'next';
+import { AuthRegister } from '@stores/types';
+import { randomUUID } from 'crypto';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	const { username, email, id }: AuthRegister = req.body;
@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	} else {
 		res.status(400).json({
 			error: true,
-			message: 'Missing data, id, email, username.',
+			message: 'Missing data, id, emaiil, username.',
 		});
 	}
 }
