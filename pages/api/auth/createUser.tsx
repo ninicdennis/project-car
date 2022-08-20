@@ -1,5 +1,6 @@
 import { AuthRegister } from '@stores/types';
 import { prisma } from '@utils/prisma';
+import { randomUUID } from 'crypto';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -10,6 +11,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 				id,
 				username,
 				email,
+			},
+		});
+		const user_id = response.id;
+		await prisma.user_profile.create({
+			data: {
+				id: randomUUID(),
+				user_id,
+				banner_image: null,
+				about: JSON.stringify(''),
 			},
 		});
 

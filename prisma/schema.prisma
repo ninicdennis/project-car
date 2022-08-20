@@ -26,7 +26,7 @@ model user_data {
 }
 
 model user_profile {
-  id             String           @id @unique @db.Uuid
+  id             String           @id @unique @default(uuid()) @db.Uuid
   user_id        String           @db.Uuid
   banner_image   String?
   about          Json?
