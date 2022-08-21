@@ -1,22 +1,27 @@
-import { Button, Card, Collapse, Container, Group, Space, TextInput, Title } from '@mantine/core';
+import { Button, Card, Collapse, Container, Group, LoadingOverlay, Space, TextInput, Title } from '@mantine/core';
 import { useState } from 'react';
 import RichTextEditor from '@components/RichTextEditor';
 import { CONTROLS } from '@components/RichTextEditor/constants';
 import { callPost } from '@utils/requests';
 import { notificationTrigger } from '@utils/notification';
 import { useForm } from '@mantine/form';
-const CreatePostComponent = ({ user_id }: { user_id: string }) => {
+const CreatePostComponent = ({ user_id, handleUpdatePosts }: { user_id: string; handleUpdatePosts: () => void }) => {
 	const [createPost, setCreatePost] = useState(false);
+	const [loading, setLoading] = useState(false);
 
 	const createPostReq = async ({ title, message }: { title: string; message: string }) => {
+		setLoading(true);
 		try {
 			await callPost({ url: '/api/posts', body: { title, body: message, user_id } }).then(() => {
 				notificationTrigger({ title: 'Success!', message: 'Sucessfully Posted!', type: 'success' });
 				setCreatePost(false);
+				handleUpdatePosts();
+				setLoading(false);
 				form.reset();
 			});
 		} catch (e) {
 			notificationTrigger({ title: 'Error!', message: 'Something went wrong, please try again!', type: 'error' });
+			setLoading(false);
 		}
 	};
 
@@ -32,7 +37,8 @@ const CreatePostComponent = ({ user_id }: { user_id: string }) => {
 
 	return (
 		<Container size='md'>
-			<Card>
+			<Card style={{ position: 'relative' }}>
+				<LoadingOverlay visible={loading} />
 				<form onSubmit={form.onSubmit((values) => createPostReq(values))}>
 					<Group style={{ display: 'flex', justifyContent: 'space-between' }}>
 						<Title order={2}>{createPost ? 'New' : 'Create a'} post</Title>
