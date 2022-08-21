@@ -18,7 +18,7 @@ const userPostBox = ({ post }: { post: Posts }) => {
 				<Space p='md' />
 				<Title order={4}>{title}</Title>
 				<Space p='xs' />
-				<RichTextEditor value={message} readOnly onChange={() => null} />
+				<RichTextEditor value={message as string} readOnly onChange={() => null} />
 				<Space p='md' />
 				<Group spacing={'sm'}>
 					<Button variant='outline'>Like</Button>
