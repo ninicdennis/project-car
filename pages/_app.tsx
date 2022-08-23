@@ -29,6 +29,8 @@ export default function App(props: AppProps) {
 				theme={{
 					/** Put your mantine theme override here */
 					colorScheme: 'dark',
+					primaryColor: 'red',
+					spacing: [4, 8, 12, 16, 32],
 				}}
 			>
 				<NotificationsProvider>

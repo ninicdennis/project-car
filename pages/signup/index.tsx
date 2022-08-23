@@ -1,17 +1,33 @@
-import { Card, Center, PasswordInput, Title, TextInput, Button, Grid, Group, LoadingOverlay } from '@mantine/core';
+import {
+	Text,
+	Card,
+	Center,
+	PasswordInput,
+	Title,
+	TextInput,
+	Button,
+	Grid,
+	Group,
+	LoadingOverlay,
+	Stack,
+} from '@mantine/core';
 import Link from 'next/link';
 import { useForm } from '@mantine/form';
 import Router from 'next/router';
 import { useUserState } from '@stores/Authentication';
 import { InitialState } from '@stores/types';
-import { useState } from 'react';
-import { notificationTrigger } from '@utils/notification';
+import { useEffect, useState } from 'react';
 import { UseFormReturnType } from '@mantine/form/lib/types';
 import { RegisterFormValues } from 'types/signup/types';
 
 const RegisterPage = ({ session }: InitialState) => {
 	const [, actions] = useUserState();
 	const [visible, setVisible] = useState(false);
+	const [signupEnabled, setSignupEnabled] = useState(true);
+
+	useEffect(() => {
+		setSignupEnabled(process.env.NEXT_PUBLIC_SIGNUP_ENABLED === 'true');
+	}, []);
 
 	if (session) {
 		Router.push('/home');
@@ -37,23 +53,20 @@ const RegisterPage = ({ session }: InitialState) => {
 		setVisible(true);
 		actions
 			.register(form.values)
-			.then(() => {
-				notificationTrigger({
-					title: 'Logged in!',
-					message: 'Welcome!',
-					type: 'success',
-				});
-				setVisible(false);
-			})
-			.catch((err) => {
-				notificationTrigger({
-					title: 'Error!',
-					message: err.message,
-					type: 'error',
-				});
-				setVisible(false);
-			});
+			.then(() => setVisible(false))
+			.catch(() => setVisible(false));
 	};
+
+	if (!signupEnabled) {
+		return (
+			<Center data-testid='signup-main' style={{ height: '100%' }}>
+				<Stack align='center'>
+					<Title align='center'>Sign ups have been disabled for now!</Title>
+					<Text>Sorry about that, stay tuned and we will be open for business! </Text>
+				</Stack>
+			</Center>
+		);
+	}
 
 	return (
 		<Center data-testid='signup-main' style={{ height: '100%' }}>

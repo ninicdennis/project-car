@@ -13,6 +13,7 @@ Create a `.env` file in the root directory and fill in these credentials:
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
 DATABASE_URL=
+NEXT_PUBLIC_SIGNUP_ENABLED=true
 ```
 
 ### RLS Policies

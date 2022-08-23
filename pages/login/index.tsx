@@ -4,7 +4,6 @@ import { useUserState } from '@stores/Authentication';
 import Router from 'next/router';
 import { InitialState } from '@stores/types';
 import { useState } from 'react';
-import { notificationTrigger } from '@utils/notification';
 
 const LoginPage = ({ session }: InitialState) => {
 	const [, actions] = useUserState();
@@ -16,8 +15,8 @@ const LoginPage = ({ session }: InitialState) => {
 
 	const form = useForm({
 		initialValues: {
-			email: 'test@email.com',
-			password: 'tester123',
+			email: '',
+			password: '',
 		},
 
 		validate: {
@@ -28,20 +27,7 @@ const LoginPage = ({ session }: InitialState) => {
 
 	const loginUser = () => {
 		setVisible(true);
-		actions
-			.login(form.values)
-			.then(() => {
-				notificationTrigger({ title: 'Logged in!', message: 'Welcome back!', type: 'success' });
-				setVisible(false);
-			})
-			.catch((err) => {
-				notificationTrigger({
-					title: 'Error!',
-					message: err.message,
-					type: 'error',
-				});
-				setVisible(false);
-			});
+		actions.login(form.values).then(() => setVisible(false));
 	};
 
 	return (
