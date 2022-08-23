@@ -2,9 +2,29 @@ import { Avatar, Button, Card, Container, Group, Space, Text, Title } from '@man
 import RichTextEditor from '@components/RichTextEditor';
 import { Posts } from 'types/posts/types';
 import dayjs from 'dayjs';
+import { IconMessage, IconThumbDown, IconThumbUp } from '@tabler/icons';
+import { useState } from 'react';
 
-const userPostBox = ({ post }: { post: Posts }) => {
-	const { title, message, created_at, Author } = post;
+const UserPostBox = ({ post }: { post: Posts }) => {
+	const [liked, setLiked] = useState<boolean | null>(null);
+	const { id, title, message, created_at, Author } = post;
+
+	const handleLikedChange = (type: 'liked' | 'disliked') => {
+		if ((liked === null && type === 'liked') || (liked === false && type === 'liked')) {
+			setLiked(true);
+			handleLikePost('liked');
+		} else if ((liked === null && type === 'disliked') || (liked === true && type === 'disliked')) {
+			setLiked(false);
+			handleLikePost('disliked');
+		} else if ((liked === true && type === 'liked') || (liked === false && type === 'disliked')) {
+			setLiked(null);
+			handleLikePost('remove');
+		}
+	};
+
+	const handleLikePost = (type: 'liked' | 'disliked' | 'remove') => {
+		// console.log(id, type);
+	};
 	return (
 		<Container size='md'>
 			<Card>
@@ -21,9 +41,23 @@ const userPostBox = ({ post }: { post: Posts }) => {
 				<RichTextEditor value={message as string} readOnly onChange={() => null} />
 				<Space p='md' />
 				<Group spacing={'sm'}>
-					<Button variant='outline'>Like</Button>
-					<Button variant='outline'>Dislike</Button>
-					<Button variant='outline'>Comment</Button>
+					<Button
+						leftIcon={<IconThumbUp />}
+						variant={liked === true ? 'filled' : 'outline'}
+						onClick={() => handleLikedChange('liked')}
+					>
+						Like
+					</Button>
+					<Button
+						leftIcon={<IconThumbDown />}
+						variant={liked === false ? 'filled' : 'outline'}
+						onClick={() => handleLikedChange('disliked')}
+					>
+						Dislike
+					</Button>
+					<Button leftIcon={<IconMessage />} variant='outline'>
+						Comment
+					</Button>
 				</Group>
 			</Card>
 			<Space p='md' />
@@ -31,4 +65,4 @@ const userPostBox = ({ post }: { post: Posts }) => {
 	);
 };
 
-export default userPostBox;
+export default UserPostBox;
