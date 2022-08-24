@@ -19,7 +19,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 				id: randomUUID(),
 				user_id,
 				banner_image: null,
-				about: JSON.stringify(''),
+				about: null,
 			},
 		});
 

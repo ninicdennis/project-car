@@ -5,7 +5,6 @@ import { CONTROLS } from '@components/RichTextEditor/constants';
 import { callPost } from '@utils/requests';
 import { notificationTrigger } from '@utils/notification';
 import { useForm } from '@mantine/form';
-import sanitizeHtml from 'sanitize-html';
 
 const CreatePostComponent = ({ user_id, handleUpdatePosts }: { user_id: string; handleUpdatePosts: () => void }) => {
 	const [createPost, setCreatePost] = useState(false);
@@ -14,7 +13,7 @@ const CreatePostComponent = ({ user_id, handleUpdatePosts }: { user_id: string; 
 	const createPostReq = async ({ title, message }: { title: string; message: string }) => {
 		setLoading(true);
 		try {
-			await callPost({ url: '/api/posts', body: { title, body: sanitizeHtml(message), user_id } }).then(() => {
+			await callPost({ url: '/api/posts', body: { title, body: message, user_id } }).then(() => {
 				notificationTrigger({ title: 'Success!', message: 'Sucessfully Posted!', type: 'success' });
 				setCreatePost(false);
 				handleUpdatePosts();

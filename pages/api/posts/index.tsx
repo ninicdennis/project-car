@@ -1,15 +1,17 @@
 import { prisma } from '@utils/prisma';
+import sanitizeHtml from 'sanitize-html';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method === 'POST') {
-		const { title, body: message, user_id } = req.body;
+		const { title, body, user_id } = req.body;
 		if (!title || !user_id) {
 			res.status(400).json({
 				error: true,
 				message: 'Missing: title, user_id.',
 			});
 		}
+		const message = sanitizeHtml(body);
 		const result = await prisma.posts.create({
 			data: {
 				title,

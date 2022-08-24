@@ -2,7 +2,8 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -29,7 +30,7 @@ model user_profile {
   id             String           @id @unique @default(uuid()) @db.Uuid
   user_id        String           @db.Uuid
   banner_image   String?
-  about          Json?
+  about          String?
   created_at     DateTime         @default(now())
   updated_at     DateTime         @default(now())
   Profile        user_data?       @relation(fields: [user_id], references: [id])
@@ -55,7 +56,7 @@ model posts {
   id                String              @id @default(uuid()) @db.Uuid
   user_id           String              @db.Uuid
   title             String
-  message           Json
+  message           String
   image_url         String?
   created_at        DateTime            @default(now())
   updated_at        DateTime            @default(now())
@@ -68,7 +69,7 @@ model post_comments {
   id            String     @id @default(uuid()) @db.Uuid
   user_id       String     @db.Uuid
   post_id       String     @db.Uuid
-  message       Json
+  message       String
   created_at    DateTime   @default(now())
   updated_at    DateTime   @default(now())
   Post          posts?     @relation(fields: [post_id], references: [id])
