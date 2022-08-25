@@ -33,6 +33,16 @@ export const callPost = async ({ url, body }: FETCH) => {
 		});
 };
 
+export const callPut = async ({ url, body }: FETCH) => {
+	return await instance
+		.put(url, body)
+		.then((res) => res)
+		.catch((e) => {
+			// TODO: Ugly, please fix.
+			throw Error(e);
+		});
+};
+
 export const callPatch = async ({ url, body }: FETCH) => {
 	return await instance
 		.patch(url, body)
@@ -45,7 +55,7 @@ export const callPatch = async ({ url, body }: FETCH) => {
 
 export const callDelete = async ({ url, body }: FETCH) => {
 	return await instance
-		.patch(url, body)
+		.delete(url, body)
 		.then((res) => res)
 		.catch((e) => {
 			// TODO: Ugly, please fix.

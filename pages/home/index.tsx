@@ -4,7 +4,7 @@ import { InitialState } from '@stores/types';
 import { LoadingOverlay, Space } from '@mantine/core';
 import CreatePost from '@components/CreatePost';
 import UserPosts from '@components/UserPosts';
-import { callGet } from '@utils/requests';
+import { callPost } from '@utils/requests';
 import { Posts } from 'types/posts/types';
 import { notificationTrigger } from '@utils/notification';
 
@@ -18,11 +18,10 @@ const Homepage = ({ session }: InitialState) => {
 	const handleUpdatePosts = () => {
 		getUserPosts();
 	};
-
 	const getUserPosts = async () => {
 		setLoading(true);
 		try {
-			const { data } = await callGet({ url: '/api/posts' });
+			const { data } = await callPost({ url: '/api/posts', body: { user_id: session?.user?.id || '' } });
 			setLoading(false);
 			setPosts(data);
 		} catch (e) {
@@ -40,9 +39,8 @@ const Homepage = ({ session }: InitialState) => {
 		<div style={{ position: 'relative' }}>
 			<CreatePost user_id={session?.user?.id || ''} handleUpdatePosts={handleUpdatePosts} />
 			<Space p='lg' />
-			{posts?.map((post) => (
-				<UserPosts key={post?.id} post={post} />
-			))}
+			{session?.user?.id &&
+				posts?.map((post) => <UserPosts key={post?.id} post={post} user_id={session?.user?.id || ''} />)}
 			<LoadingOverlay visible={loading} />
 		</div>
 	);

@@ -77,6 +77,7 @@ model post_comments {
 }
 
 model post_like_dislike {
+  id       String     @id @default(uuid()) @db.Uuid
   user_id  String     @db.Uuid
   post_id  String     @db.Uuid
   User     user_data? @relation(fields: [user_id], references: [id])

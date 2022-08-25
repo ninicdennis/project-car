@@ -13,7 +13,7 @@ const CreatePostComponent = ({ user_id, handleUpdatePosts }: { user_id: string; 
 	const createPostReq = async ({ title, message }: { title: string; message: string }) => {
 		setLoading(true);
 		try {
-			await callPost({ url: '/api/posts', body: { title, body: message, user_id } }).then(() => {
+			await callPost({ url: '/api/posts/create', body: { title, body: message, user_id } }).then(() => {
 				notificationTrigger({ title: 'Success!', message: 'Sucessfully Posted!', type: 'success' });
 				setCreatePost(false);
 				handleUpdatePosts();
