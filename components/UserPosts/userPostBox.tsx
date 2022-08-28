@@ -171,7 +171,6 @@ const UserPostBox = ({ post, user_id }: { post: Posts; user_id: string }) => {
 					<RichTextEditor value={commentMessage} onChange={setCommentMessage} controls={COMMENT_CONTROLS} mb={8} />
 					<Button onClick={handleAddComment}>Post</Button>
 					<Space p='xs' />
-					{/*  note here, change the values with actual data, this is just main page data to see how this would look. */}
 					{comments.map(({ CommentAuthor, id, created_at, message }) => (
 						<Card withBorder mb={8} key={id}>
 							<Group>
