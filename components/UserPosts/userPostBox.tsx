@@ -6,24 +6,41 @@ import { IconMessage, IconThumbDown, IconThumbUp } from '@tabler/icons';
 import { useEffect, useState } from 'react';
 import { COMMENT_CONTROLS } from '@components/RichTextEditor/constants';
 import { notificationTrigger } from '@utils/notification';
-import { callDelete, callPost, callPut } from '@utils/requests';
+import { callDelete, callGet, callPost, callPut } from '@utils/requests';
+import { post_comments } from '@prisma/client';
 
 const UserPostBox = ({ post, user_id }: { post: Posts; user_id: string }) => {
 	const [liked, setLiked] = useState<boolean | null>(null);
 	const [viewComment, setViewComment] = useState(false);
 	const [commentMessage, setCommentMessage] = useState('');
-	const { id, title, message, created_at, Author, post_data, post_like_dislike } = post;
-	const userLikeDislike = post_like_dislike[0];
+	const [comments, setComments] = useState<(post_comments & { CommentAuthor: { username: string } })[]>([]);
+	// ? TODO: Get data after like dislike
+	const { id, title, message, created_at, post_data, liked: postLiked, disliked: postDisliked, username } = post;
 
 	useEffect(() => {
-		if (!userLikeDislike) return;
-		const { liked, disliked } = userLikeDislike;
-		if (liked) {
+		if (!post_data) return;
+		if (postLiked) {
 			setLiked(true);
-		} else if (disliked) {
+		} else if (postDisliked) {
 			setLiked(false);
 		}
-	}, [userLikeDislike]);
+	}, [post_data]);
+
+	useEffect(() => {
+		if (viewComment && !comments.length) {
+			getPostComments(id);
+		}
+	}, [viewComment]);
+
+	const getPostComments = async (post_id: string) => {
+		try {
+			await callGet({
+				url: `/api/posts/comment/${post_id}`,
+			}).then((res) => setComments(res.data));
+		} catch (e) {
+			notificationTrigger({ title: 'Error!', message: 'Error! Please try action again!', type: 'error' });
+		}
+	};
 
 	const handleLikedChange = (type: 'liked' | 'disliked') => {
 		if ((liked === null && type === 'liked') || (liked === false && type === 'liked')) {
@@ -41,7 +58,7 @@ const UserPostBox = ({ post, user_id }: { post: Posts; user_id: string }) => {
 	const handleLikeDelete = async () => {
 		try {
 			await callDelete({
-				url: `/api/posts/interact/${userLikeDislike.id}`,
+				url: `/api/posts/interact/${post_data?.id}`,
 			});
 		} catch (e) {
 			notificationTrigger({ title: 'Error!', message: 'Error! Please try action again!', type: 'error' });
@@ -50,9 +67,9 @@ const UserPostBox = ({ post, user_id }: { post: Posts; user_id: string }) => {
 
 	const handleLikePost = async (type: 'liked' | 'disliked') => {
 		try {
-			if (userLikeDislike?.id) {
+			if (post_data?.id) {
 				await callPut({
-					url: `/api/posts/interact/${userLikeDislike.id}`,
+					url: `/api/posts/interact/${post_data.id}`,
 					body: {
 						type,
 					},
@@ -72,13 +89,30 @@ const UserPostBox = ({ post, user_id }: { post: Posts; user_id: string }) => {
 		}
 	};
 
+	const handleAddComment = async () => {
+		try {
+			const body = {
+				user_id,
+				message: commentMessage,
+			};
+			await callPost({
+				url: `/api/posts/comment/${id}`,
+				body,
+			}).then(async () => {
+				getPostComments(id);
+			});
+		} catch (e) {
+			notificationTrigger({ title: 'Error!', message: 'Error! Please try action again!', type: 'error' });
+		}
+	};
+
 	return (
 		<Container size='md'>
 			<Card>
 				<Group>
 					<Avatar radius='sm' size='lg' src={null} />
 					<div>
-						<Title order={4}>{Author.username}</Title>
+						<Title order={4}>{username}</Title>
 						<Text>{dayjs(created_at).format('YYYY-MM-DD HH:mm')}</Text>
 					</div>
 				</Group>
@@ -114,14 +148,14 @@ const UserPostBox = ({ post, user_id }: { post: Posts; user_id: string }) => {
 							variant={liked === true ? 'filled' : 'outline'}
 							onClick={() => handleLikedChange('liked')}
 						>
-							{post_data?.liked || 0} Like
+							{postLiked} Like{postLiked && postLiked > 1 ? 's' : ''}
 						</Button>
 						<Button
 							leftIcon={<IconThumbDown />}
 							variant={liked === false ? 'filled' : 'outline'}
 							onClick={() => handleLikedChange('disliked')}
 						>
-							{post_data?.disliked || 0} Dislike
+							{postDisliked} Dislike{postDisliked && postDisliked > 1 ? 's' : ''}
 						</Button>
 						<Button
 							leftIcon={<IconMessage />}
@@ -135,29 +169,21 @@ const UserPostBox = ({ post, user_id }: { post: Posts; user_id: string }) => {
 				<Space mb='xs' />
 				<Collapse in={viewComment}>
 					<RichTextEditor value={commentMessage} onChange={setCommentMessage} controls={COMMENT_CONTROLS} mb={8} />
-					<Button>Post</Button>
+					<Button onClick={handleAddComment}>Post</Button>
 					<Space p='xs' />
 					{/*  note here, change the values with actual data, this is just main page data to see how this would look. */}
-					<Card withBorder mb={8}>
-						<Group>
-							<Avatar src={null} radius='sm' />
-							<div>
-								<Title order={5}>{Author.username}</Title>
-								<Text>{dayjs(created_at).format('YYYY-MM-DD HH:mm')}</Text>
-							</div>
-						</Group>
-						<RichTextEditor value={message} readOnly onChange={() => null} />
-					</Card>
-					<Card withBorder>
-						<Group>
-							<Avatar src={null} radius='sm' />
-							<div>
-								<Title order={5}>{Author.username}</Title>
-								<Text>{dayjs(created_at).format('YYYY-MM-DD HH:mm')}</Text>
-							</div>
-						</Group>
-						<RichTextEditor value={message} readOnly onChange={() => null} />
-					</Card>
+					{comments.map(({ CommentAuthor, id, created_at, message }) => (
+						<Card withBorder mb={8} key={id}>
+							<Group>
+								<Avatar src={null} radius='sm' />
+								<div>
+									<Title order={5}>{CommentAuthor.username}</Title>
+									<Text>{dayjs(created_at).format('YYYY-MM-DD HH:mm')}</Text>
+								</div>
+							</Group>
+							<RichTextEditor value={message} readOnly onChange={() => null} />
+						</Card>
+					))}
 				</Collapse>
 			</Card>
 			<Space p='md' />

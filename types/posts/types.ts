@@ -9,9 +9,17 @@
 // 	image_url?: string;
 // 	created_at: string;
 // }
-import { posts, post_like_dislike, user_data } from '@prisma/client';
-export type Posts = posts & {
-	Author: user_data;
-	post_data: { liked: number; disliked: number };
-	post_like_dislike: post_like_dislike[];
+export type Posts = {
+	id: string;
+	title: string;
+	message: string;
+	image_url: string | null;
+	user_id: string;
+	created_at: Date;
+	updated_at: Date;
+	username: string;
+	liked: number | null;
+	disliked: number | null;
+	post_id: string;
+	post_data: { liked: boolean; disliked: boolean; id: string } | null;
 };
